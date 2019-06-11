@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import './App.css';
@@ -20,7 +20,7 @@ const navData = [
 			{ id: '10', name: 'Compare' }
 		]
 	},
-	{ id: '2', name: 'iPad', products: [] },
+	{ id: '2', name: 'iPad', products: [{ id: '1', name: 'hi sona!' }] },
 	{ id: '3', name: 'iPhone', products: [] },
 	{ id: '4', name: 'Watch', products: [] },
 	{ id: '5', name: 'TV', products: [] },
@@ -39,6 +39,19 @@ const StyledContainer = styled.div`
 	}
 `;
 
+function NavSubItems(props) {
+	const StyledDiv = styled.div``;
+	const { id } = props.match.params;
+	const navObj = navData.find(nav => id === nav.id);
+	return (
+		<div>
+			<StyledDiv style={{ display: 'flex' }}>
+				{navObj.products.map(product => <div key={product.id}>{product.name}</div>)}
+			</StyledDiv>
+		</div>
+	);
+}
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -52,6 +65,7 @@ class App extends React.Component {
 						{navItem.name}{' '}
 					</NavLink>
 				))}
+				<Route path="/:id" render={props => <NavSubItems {...props} />} />
 			</StyledContainer>
 		);
 	}
