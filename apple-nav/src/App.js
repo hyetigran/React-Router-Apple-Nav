@@ -38,8 +38,23 @@ const StyledContainer = styled.div`
 		justify-content: space-between;
 	}
 `;
-function App() {
-	return <StyledContainer />;
+
+class App extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<StyledContainer>
+				{navData.map((navItem, id) => (
+					<NavLink key={navItem.id} to={`/${navItem.id}`}>
+						{navItem.name}{' '}
+					</NavLink>
+				))}
+			</StyledContainer>
+		);
+	}
 }
 
 export default App;
